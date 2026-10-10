@@ -118,7 +118,7 @@ class AnthropicClient(BaseLLMClient):
 
 from google import genai
 from google.genai import types
-
+from google.genai.errors import APIError # Excepción específica del SDK moderno de Google GenAI
 
 class GeminiClient(BaseLLMClient):
     def __init__(self, api_key: str, model: str, temperature: float, max_tokens: int):
@@ -152,9 +152,12 @@ class GeminiClient(BaseLLMClient):
                 ),
             )
             return ModelResponse(provider=Provider.GEMINI, model=self.model, content=response.text)
-        except Exception as e:
+        except APIError as e:
             return ModelResponse(provider=Provider.GEMINI, model=self.model, content="",
                                   error=f"Error de la API de Gemini: {e}")
+        except Exception as e:
+            return ModelResponse(provider=Provider.GEMINI, model=self.model, content="",
+                                  error=f"Error inesperado en Gemini: {e}")
 
     async def generate_stream(self, messages: List[ChatMessage]) -> AsyncGenerator[str, None]:
         try:
