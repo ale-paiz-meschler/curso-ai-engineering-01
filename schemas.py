@@ -2,6 +2,33 @@ from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field, SecretStr, field_validator
 
+from enum import Enum
+from typing import List
+from pydantic import BaseModel, Field, field_validator
+
+class NivelCriticidad(str, Enum):
+    BAJA = "baja"
+    MEDIA = "media"
+    ALTA = "alta"
+
+class ExtractedTechnicalEntities(BaseModel):
+    tecnologías: List[str] = Field(
+        description="Lista de tecnologías, lenguajes, frameworks o herramientas de infraestructura detectadas en el texto."
+    )
+    nivel_de_criticidad: NivelCriticidad = Field(
+        description="Nivel de criticidad estimado del reporte o arquitectura descrita."
+    )
+    resumen_tecnico: str = Field(
+        description="Breve resumen ejecutivo técnico de una o dos líneas sobre el problema o arquitectura analizada."
+    )
+
+    @field_validator("tecnologías")
+    @classmethod
+    def validar_tecnologias_no_vacias(cls, v: List[str]) -> List[str]:
+        if not v:
+            raise ValueError("La lista de tecnologías extraídas no puede estar vacía.")
+        return [t.strip() for t in v if t.strip()]
+
 class Provider(str, Enum):
     OPENAI = "openai"
     ANTHROPIC = "anthropic"

@@ -45,3 +45,20 @@ Se creó un archivo llamado `.env` en la raíz del proyecto, que fue agregado al
 OPENAI_API_KEY=clave_real_de_openai
 ANTHROPIC_API_KEY=clave_real_de_anthropic
 GOOGLE_API_KEY=clave_real_de_google
+
+
+# Ejercicio opcional sobre Unidad 1: Embeddings y similitud
+
+## Para esta entrega hay que observar el siguiente archivo:
+similitud.py: Script complementario de recuperación léxica mediante TF-IDF y Similitud Coseno sobre un corpus técnico diversificado.
+
+
+# Pre-entrega 2: Pipeline de procesamiento validado
+
+## Para esta entrega, se deben observar los siguientes archivos:  
+1. **schemas.py: Modelos de datos estructurados utilizando Pydantic, con validadores estrictos y enumeraciones (NivelCriticidad) para asegurar esquemas de salida tipados.**
+
+2. **pipeline.py / chain.py: Implementación de la cadena LCEL (prompt | model.with_structured_output(Schema)) combinada con políticas de resiliencia y reintentos automáticos (.with_retry()). Incluye la función asíncrona process_text(text: str) mediante .ainvoke().**
+
+3. **main_pipeline.py: Script de ejecución que evalúa casos de prueba reales y pruebas de estrés con textos ambiguos.**
+
