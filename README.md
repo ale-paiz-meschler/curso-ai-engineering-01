@@ -62,3 +62,11 @@ similitud.py: Script complementario de recuperación léxica mediante TF-IDF y S
 2. **pipeline.py / chain.py: Implementación de la cadena LCEL (prompt | model.with_structured_output(Schema)) combinada con políticas de resiliencia y reintentos automáticos (.with_retry()). Incluye la función asíncrona process_text(text: str) mediante .ainvoke().**
 
 3. **main_pipeline.py: Script de ejecución que evalúa casos de prueba reales y pruebas de estrés con textos ambiguos.**
+
+# Pre-entrega 3: Sistema de recuperación semántica local (RAG)
+
+1. **ingest.py: Módulo encargado de leer archivos Markdown locales de la carpeta /data, aplicar un chunking estratégico (RecursiveCharacterTextSplitter, tamaño 500 con overlap de 50), y persistir los embeddings en una instancia local de ChromaDB en ./vectorstore (incluyendo control de persistencia para evitar reindexaciones innecesarias).** 
+
+2. **rag_chain.py: Define la función asíncrona get_rag_response(query: str), configurando un retriever optimizado (top_k=3 para evitar contexto infinito), un prompt de sistema con estricto filtro de veracidad ("No lo sé"), y un modelo de salida estructurado en Pydantic que incluye respuesta, referencias de archivos y validación de contexto.**
+
+3. **main_rag.py: Script de ejecución principal que valida el flujo completo realizando una consulta válida sobre los documentos locales y una prueba trampa anti-alucinación.**
