@@ -69,4 +69,4 @@ similitud.py: Script complementario de recuperación léxica mediante TF-IDF y S
 
 2. **rag_chain.py: Define la función asíncrona get_rag_response(query: str), configurando un retriever optimizado (top_k=3 para evitar contexto infinito), un prompt de sistema con estricto filtro de veracidad ("No lo sé"), y un modelo de salida estructurado en Pydantic que incluye respuesta, referencias de archivos y validación de contexto.**
 
-3. **main_rag.py: Script de ejecución principal que valida el flujo completo realizando una consulta válida sobre los documentos locales y una prueba trampa anti-alucinación.**
+3. **main_rag.py: Script de ejecución principal que valida el flujo completo. Le pide al usuario que ingrese una consulta y la valida sobre los documentos locales.**
