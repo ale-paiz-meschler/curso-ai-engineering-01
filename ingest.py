@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
+
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
@@ -14,7 +16,7 @@ def inicializar_base_vectorial():
         print("📂 [Optimización] La base vectorial ya existe en './vectorstore'. Omitiendo reingesta.")
         return Chroma(persist_directory=persist_dir, embedding_function=embeddings)
 
-    print("📂 Leyendo archivos MD de la carpeta 'data'...")
+    print("📂 Leyendo archivos Markdown de la carpeta 'data'...")
     loader = DirectoryLoader(
         './data', 
         glob="**/*.md", 
@@ -24,13 +26,14 @@ def inicializar_base_vectorial():
     documentos = loader.load()
     print(f"📄 Se cargaron {len(documentos)} documentos.")
 
-    text_splitter = RecursiveCharacterTextSplitter(
+    # Ajuste de Chunking basado en Tokens reales (mínimo 500 tokens con 50 de overlap)
+    text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+        encoding_name="cl100k_base",  # Codificación estándar usada por modelos modernos de OpenAI
         chunk_size=500,
-        chunk_overlap=50,
-        separators=["\n\n", "\n", " ", ""]
+        chunk_overlap=50
     )
     chunks = text_splitter.split_documents(documentos)
-    print(f"✂️ Se generaron {len(chunks)} fragmentos (chunks).")
+    print(f"✂️ Se generaron {len(chunks)} fragmentos basados en tokens.")
 
     vectorstore = Chroma.from_documents(
         documents=chunks,

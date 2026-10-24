@@ -70,3 +70,5 @@ similitud.py: Script complementario de recuperación léxica mediante TF-IDF y S
 2. **rag_chain.py: Define la función asíncrona get_rag_response(query: str), configurando un retriever optimizado (top_k=3 para evitar contexto infinito), un prompt de sistema con estricto filtro de veracidad ("No lo sé"), y un modelo de salida estructurado en Pydantic que incluye respuesta, referencias de archivos y validación de contexto.**
 
 3. **main_rag.py: Script de ejecución principal que valida el flujo completo. Le pide al usuario que ingrese una consulta y la valida sobre los documentos locales.**
+
+4. **Se configuró el chunking basado en tokens reales utilizando RecursiveCharacterTextSplitter.from_tiktoken_encoder (mínimo de 500 tokens), se incorporó un archivo requirements.txt para garantizar la reproducibilidad del entorno, y se configuró un registro automático de pruebas obligatorias (válida y trampa) en la ejecución inicial de main_rag.py para demostrar la robustez antialucinación del sistema RAG.**
