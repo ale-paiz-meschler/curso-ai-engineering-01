@@ -72,3 +72,33 @@ similitud.py: Script complementario de recuperación léxica mediante TF-IDF y S
 3. **main_rag.py: Script de ejecución principal que valida el flujo completo. Le pide al usuario que ingrese una consulta y la valida sobre los documentos locales.**
 
 4. **Se configuró el chunking basado en tokens reales utilizando RecursiveCharacterTextSplitter.from_tiktoken_encoder (mínimo de 500 tokens), se incorporó un archivo requirements.txt para garantizar la reproducibilidad del entorno, y se configuró un registro automático de pruebas obligatorias (válida y trampa) en la ejecución inicial de main_rag.py para demostrar la robustez antialucinación del sistema RAG.**
+
+# Pre-entrega 4: Sistema RAG escalable en la nube con Pinecone
+
+## Para esta entrega, se deben observar los siguientes archivos:
+
+1. **/data/dberrors.csv: Incorporación de un set de datos tabular estructurado con 250 registros de códigos de error de los 5 principales motores de bases de datos relacionales (Microsoft SQL Server, Oracle, DB2, PostgreSQL y MySQL), diseñado específicamente para potenciar la precisión de la recuperación léxica.**
+2. **ingest_pinecone.py: Pipeline de Ingesta en la Nube. Procesa los registros aplicando un chunking estratégico basado en tokens (con el tokenizador de OpenAI y un tamaño de 600 tokens con overlap de 60). Se conecta a Pinecone Serverless utilizando vectores densos de 1536 dimensiones (text-embedding-3-small) y organizando la información mediante un namespace dedicado (db-errors). Almacena el texto original y metadatos avanzados directamente en el índice, evitando llamadas a bases de datos relacionales externas.**
+3. **hybrid_retriever.py: Recuperador Híbrido. Implementa un EnsembleRetriever que combina de forma ponderada la búsqueda semántica densa de Pinecone (60%) con la búsqueda léxica exacta de BM25 (40%). Esto garantiza una precisión quirúrgica tanto para conceptos abstractos como para códigos de error alfanuméricos exactos (ej. 2627, ORA-00942).**
+4. **evaluate_rag.py y golden_set.json: Script de Evaluación con Golden Set. Utiliza un conjunto de preguntas de prueba técnicas de alta precisión para medir de forma automatizada las métricas fundamentales del sistema (Precision@5 y Recall@5), validando el rendimiento de la recuperación.**
+
+Instrucciones de ejecución para esta entrega
+
+1. **Instalación local de `uv` y creación del entorno virtual con Python 3.12:**
+   ```bash
+   curl -LsSf [https://astral.sh/uv/install.sh](https://astral.sh/uv/install.sh) | sh
+   source $HOME/.local/bin/env
+   uv --version
+   uv venv --python 3.12
+
+2. **Subir y poblar la base vectorial en la nube::**
+   ```bash
+   python3 ingest_pinecone.py
+
+3. **Probar el recuperador híbrido de manera aislada**
+   ```bash
+   python3 hybrid_retriever.py
+
+4. **Ejecutar la evaluación formal de rendimiento**
+   ```bash
+   python3 evaluate_rag.py

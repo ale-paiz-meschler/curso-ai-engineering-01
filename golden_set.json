@@ -1,0 +1,22 @@
+[
+    {
+        "pregunta": "¿Cómo puedo solucionar el error 2627 de violación de clave primaria en SQL Server?",
+        "documento_id_esperado": "mssql"
+    },
+    {
+        "pregunta": "¿Qué causa el error ORA-00942 en Oracle cuando indica que la tabla o vista no existe?",
+        "documento_id_esperado": "oracle"
+    },
+    {
+        "pregunta": "¿Cuál es la solución recomendada para el código SQL0204N en IBM DB2 cuando un objeto no está definido?",
+        "documento_id_esperado": "db2"
+    },
+    {
+        "pregunta": "¿Cómo se maneja la violación de unicidad con el código de error 23505 en PostgreSQL?",
+        "documento_id_esperado": "postgres"
+    },
+    {
+        "pregunta": "¿Qué pasos debo seguir si obtengo el error 1062 de duplicado de entrada en una clave de MySQL?",
+        "documento_id_esperado": "mysql"
+    }
+]
