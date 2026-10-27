@@ -23,7 +23,7 @@ def inicializar_ingesta_pinecone():
         raise ValueError("❌ No se encontró la variable PINECONE_API_KEY en el entorno o archivo .env")
 
     index_name = "ai-engineering-index"
-    namespace_name = "patrones-diseno"
+    namespace_name = "dberrors"
 
     pc = Pinecone(api_key=api_key)
 
