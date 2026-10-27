@@ -101,4 +101,4 @@ Instrucciones de ejecución para esta entrega
 
 4. **Ejecutar la evaluación formal de rendimiento**
    ```bash
-   python3 evaluate_rag.py
+   python3 evaluate.py
